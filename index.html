@@ -3,15 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- ========================================================== -->
-<!-- 💡 [수정 필요] 이 두 곳의 교재명만 레포지토리 이름에 맞게 바꿔주세요 -->
-<!-- 예: RT-100-1 이면 "RT-100-1 MP3", RT-70-2 면 "RT-70-2 MP3" -->
-<meta property="og:title" content="RT-100-1 MP3">
+<!-- 카카오톡 미리보기 및 브라우저 탭 제목 설정 -->
+<meta property="og:title" content="RT-100-3 MP3">
 <meta property="og:description" content="클릭하여 교재 음원을 재생하세요">
-<title>RT-100-3 MP3</title>
-<!-- ========================================================== -->
-
+<title>RT-70-3 MP3</title>
 <style>
   body { font-family: 'Malgun Gothic', sans-serif; max-width: 650px; margin: 20px auto; padding: 0 15px; background: #f8f9fa; }
   h2 { color: #222; border-bottom: 2px solid #0066cc; padding-bottom: 8px; }
@@ -36,7 +31,7 @@
 
 <script>
 const USER = "jonmiraen72";
-const REPO = location.pathname.split('/')[1] || "RT-100-1";
+const REPO = location.pathname.split('/')[1] || "RT-70-3";
 const API_BASE = `https://api.github.com/repos/${USER}/${REPO}/contents`;
 
 let currentTracks = [];
@@ -60,7 +55,7 @@ async function loadFolders() {
     const items = await res.json();
     const folders = items.filter(item => item.type === "dir");
     
-    // 폴더 이름 안의 첫 번째 숫자 기준 완벽 정렬 (Unit 6, Unit 2000 혼선 방지)
+    // 폴더 이름에서 첫 번째로 나오는 숫자만 정확하게 추출하여 오름차순 정렬합니다.
     folders.sort((a, b) => {
       const matchA = a.name.match(/(\d+)/);
       const matchB = b.name.match(/(\d+)/);
@@ -92,7 +87,7 @@ async function loadTracks(encodedPath, folderName) {
     const items = await res.json();
     currentTracks = items.filter(item => item.name.toLowerCase().endsWith(".mp3"));
     
-    // 트랙 파일 정렬
+    // 트랙 파일들도 첫 번째 숫자를 기준으로 올바르게 정렬합니다.
     currentTracks.sort((a, b) => {
       const matchA = a.name.match(/(\d+)/);
       const matchB = b.name.match(/(\d+)/);
